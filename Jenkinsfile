@@ -22,7 +22,7 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'test', credentialsId: 'github-token', url: 'https://github.com/pssharma415/register-app-test.git
+                    git branch: 'test', credentialsId: 'github-token', url: 'https://github.com/pssharma415/register-app-test.git'
                 }
         }
 
