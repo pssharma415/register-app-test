@@ -22,7 +22,7 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'main', credentialsId: 'github', url: 'https://github.com/Ashfaque-9x/register-app'
+                    git branch: 'test', credentialsId: 'github', url: 'https://github.com/pssharma415/register-app-test.git
                 }
         }
 
@@ -111,5 +111,7 @@ pipeline {
     //                  subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Successful", 
     //                  mimeType: 'text/html',to: "ashfaque.s510@gmail.com"
     //   }      
+
+   
    }
 }
