@@ -4,15 +4,15 @@ pipeline {
         jdk 'Java17'
         maven 'Maven3'
     }
-    // environment {
-	//     APP_NAME = "register-app-pipeline"
-    //         RELEASE = "1.0.0"
-    //         DOCKER_USER = "ashfaque9x"
-    //         DOCKER_PASS = 'dockerhub'
-    //         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-    //         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
-	//     JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
-    // }
+    environment {
+	    APP_NAME = "register-app-pipeline-test"
+            RELEASE = "1.0.0"
+            DOCKER_USER = "psharma10394"
+            DOCKER_PASS = 'sharma@$01P'
+            IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+            IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+	    JENKINS_API_TOKEN = credentials("JENKINS_API_TOKEN")
+    }
     stages{
         stage("Cleanup Workspace"){
                 steps {
@@ -22,7 +22,7 @@ pipeline {
 
         stage("Checkout from SCM"){
                 steps {
-                    git branch: 'test', credentialsId: 'github', url: 'https://github.com/pssharma415/register-app-test.git
+                    git branch: 'test', credentialsId: 'github-token', url: 'https://github.com/pssharma415/register-app-test.git'
                 }
         }
 
@@ -58,21 +58,21 @@ pipeline {
 
     //     }
 
-    //     stage("Build & Push Docker Image") {
-    //         steps {
-    //             script {
-    //                 docker.withRegistry('',DOCKER_PASS) {
-    //                     docker_image = docker.build "${IMAGE_NAME}"
-    //                 }
+        stage("Build & Push Docker Image") {
+            steps {
+                script {
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image = docker.build "${IMAGE_NAME}"
+                    }
 
-    //                 docker.withRegistry('',DOCKER_PASS) {
-    //                     docker_image.push("${IMAGE_TAG}")
-    //                     docker_image.push('latest')
-    //                 }
-    //             }
-    //         }
+                    docker.withRegistry('',DOCKER_PASS) {
+                        docker_image.push("${IMAGE_TAG}")
+                        docker_image.push('latest')
+                    }
+                }
+            }
 
-    //    }
+       }
 
     //    stage("Trivy Scan") {
     //        steps {
